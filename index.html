@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AFTER VISIT SUMMARY</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>CPAP VISIT SUMMARY</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -26,90 +26,114 @@
             background-color: #fff;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-        h1, h2, h3 {
-            color: #01579b;
-        }
-        h1 {
-            margin-top: 0;
-        }
-        section {
-            margin-bottom: 30px;
-        }
-        ul {
-            list-style-type: disc;
-            margin-left: 20px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
-        table, th, td {
-            border: 1px solid #ccc;
-        }
-        th, td {
-            padding: 8px 12px;
-            text-align: left;
-        }
-        th {
-            background-color: #e1f5fe;
-        }
-        .note {
-            font-size: 0.9em;
-            color: #555;
-        }
-        .download-link {
+        h1, h2, h3 { color: #01579b; }
+        h1 { margin-top: 0; }
+        section { margin-bottom: 30px; }
+        ul { list-style-type: disc; margin-left: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        table, th, td { border: 1px solid #ccc; }
+        th, td { padding: 8px 12px; text-align: left; }
+        th { background-color: #e1f5fe; }
+        .note { font-size: 0.9em; color: #555; }
+
+        /* Buttons / controls */
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin: 14px auto;
             text-align: center;
-            margin-top: 10px;
         }
-        footer {
-            border-top: 1px solid #eee;
-            padding-top: 10px;
-            font-size: 0.9em;
+        .btn {
+            background: #01579b;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 14px;
+            font-size: 14px;
+            cursor: pointer;
         }
-        a {
-            color: #0066cc;
-            text-decoration: none;
+        .btn:hover { filter: brightness(1.05); }
+        .btn.secondary { background: #455a64; }
+
+        /* (Optional) keep a print stylesheet for people who hit Ctrl/Cmd+P */
+        * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        .no-print { display: block; }
+        @media print {
+            .no-print { display: none !important; }
+            a[href]:after { content: ""; }
+            header, main { box-shadow: none; }
+            @page { size: Letter; margin: 12mm; }
+            h2, h3, table, tr, img, section { break-inside: avoid; page-break-inside: avoid; }
         }
-        a:hover {
-            text-decoration: underline;
+
+        @media (max-width: 600px) {
+            .btn {
+                width: 90%;
+                font-size: 16px;
+                padding: 12px 0;
+            }
         }
     </style>
 </head>
 <body>
-    <h2 style="text-align: center; margin-top: 20px; color: #01579b;">CPAP Visit Summary</h2>
+    <!-- Title above the blue band -->
+    <h2 style="text-align:center; margin-top:20px; color:#01579b;">CPAP Visit Summary</h2>
+
     <header>
         <h1>AFTER VISIT SUMMARY</h1>
     </header>
-    <p class="download-link">
-        <a href="cpap_support_guide.html" download>Download this summary</a>
-    </p>
-    <main>
+
+    <!-- Controls -->
+    <div class="controls no-print">
+        <button id="pdfBtn" class="btn">Download PDF</button>
+        <button id="vcfBtn" class="btn secondary">Download Contact Card (Kasim Hassen)</button>
+    </div>
+
+    <main id="pdf-source">
         <section>
             <h2>Setup</h2>
             <ul>
-                <li>Video: <a href="https://youtu.be/4Ctb_N41KD0?si=3HLojNI57-IWmmYo" target="_blank" rel="noopener">Setup walkthrough</a></li>
+                <li>Video:
+                    <a href="https://youtu.be/4Ctb_N41KD0?si=3HLojNI57-IWmmYo" target="_blank" rel="noopener">
+                        Setup walkthrough
+                    </a>
+                </li>
             </ul>
         </section>
 
         <section>
             <h2>Review the basics</h2>
             <ul>
-                <li>Overview: <a href="https://youtu.be/byF0LUrDygQ?si=QGJy9xl-fGiMXIvV" target="_blank" rel="noopener">Watch on YouTube</a></li>
+                <li>Overview:
+                    <a href="https://youtu.be/byF0LUrDygQ?si=QGJy9xl-fGiMXIvV" target="_blank" rel="noopener">
+                        Watch on YouTube
+                    </a>
+                </li>
             </ul>
         </section>
 
         <section>
             <h2>Cleaning</h2>
             <ul>
-                <li>Video: <a href="https://youtu.be/c6Vwca9kJLE?si=dHqrytDc2Qwm8HR1" target="_blank" rel="noopener">CPAP essentials</a></li>
+                <li>Video:
+                    <a href="https://youtu.be/c6Vwca9kJLE?si=dHqrytDc2Qwm8HR1" target="_blank" rel="noopener">
+                        CPAP essentials
+                    </a>
+                </li>
             </ul>
         </section>
 
         <section>
             <h2>Troubleshooting tips</h2>
             <ul>
-                <li>Common issues and fixes: <a href="https://youtu.be/kLvbLflxzug?si=1KsUkVZjxTCIFFsW" target="_blank" rel="noopener">Watch here</a></li>
+                <li>Common issues and fixes:
+                    <a href="https://youtu.be/kLvbLflxzug?si=1KsUkVZjxTCIFFsW" target="_blank" rel="noopener">
+                        Watch here
+                    </a>
+                </li>
             </ul>
         </section>
 
@@ -117,8 +141,16 @@
         <section>
             <h2>ResMed resources</h2>
             <ul>
-                <li>Patient education hub: <a href="https://www.resmed.com/en-us/products/cpap/the-complete-system/" target="_blank" rel="noopener">ResMed Resource 1</a></li>
-                <li>Masks, parts, and care: <a href="https://www.resmed.com/en-us/sleep-health/sleep-apnea/sleep-study-and-specialist-care/blog/" target="_blank" rel="noopener">ResMed Resource 2</a></li>
+                <li>Patient education hub:
+                    <a href="https://www.resmed.com/en-us/products/cpap/the-complete-system/" target="_blank" rel="noopener">
+                        ResMed Resource 1
+                    </a>
+                </li>
+                <li>Masks, parts, and care:
+                    <a href="https://www.resmed.com/en-us/sleep-health/sleep-apnea/sleep-study-and-specialist-care/blog/" target="_blank" rel="noopener">
+                        ResMed Resource 2
+                    </a>
+                </li>
             </ul>
         </section>
 
@@ -126,20 +158,23 @@
         <section>
             <h2>Insurance coverage guidelines (Standard)</h2>
             <p><em>These are typical requirements. Always confirm with your specific plan.</em></p>
+
             <h3>Initial 90 days</h3>
             <ul>
-                <li><strong>Usage criteria:</strong> Documented compliant use as required by your insurer
+                <li>
+                    <strong>Usage criteria:</strong> Documented compliant use as required by your insurer
                     <ul>
                         <li>At least 21 days of use within any 30-day period during the initial 90 days</li>
                         <li>Please refer to your “Welcome” emails or calls as your insurance coverage may differ</li>
                     </ul>
                 </li>
-                <li><strong>Face-to-face physician visit requirement:</strong> Follow‑up typically within the first 90 days</li>
+                <li><strong>Face-to-face physician visit requirement:</strong> Follow-up typically within the first 90 days</li>
             </ul>
+
             <h3>Resupply schedule (typical allowances)</h3>
             <table>
                 <thead>
-                    <tr><th>Item</th><th>Typical frequency</th><th>Notes</th></tr>
+                    <tr><th>Item</th><th>Typical frequency</th><th>Replacement/Notes</th></tr>
                 </thead>
                 <tbody>
                     <tr><td>CPAP device</td><td>Every 5 years</td><td>Replacement cycle varies by plan</td></tr>
@@ -151,21 +186,81 @@
                     <tr><td>Filters</td><td>2 per month</td><td>Often one every two weeks</td></tr>
                 </tbody>
             </table>
-            <p>More on coverage and supplies: <a href="https://www.resmed.com/en-us/health-professionals/solutions/resmed-resupply/replacement-guidelines/" target="_blank" rel="noopener">ResMed insurance info</a></p>
-            <p class="note">The above is a general recommendation based on published data curated by respiratory therapist for your convenience. It is not endorsed by Kadence Health Care nor is it legally binding. Always follow your clinician’s guidance and your insurer’s policies.</p>
+
+            <p>More on coverage and supplies:
+                <a href="https://www.resmed.com/en-us/health-professionals/solutions/resmed-resupply/replacement-guidelines/" target="_blank" rel="noopener">
+                    ResMed insurance info
+                </a>
+            </p>
+
+            <p class="note">
+                The above is a general recommendation based on published data curated by respiratory therapist for your convenience.
+                It is not endorsed by Kadence Health Care nor is it legally binding. Always follow your clinician’s guidance and your insurer’s policies.
+            </p>
         </section>
 
         <section>
             <h2>Questions and technical support</h2>
-            <p><strong>KASIM HASSEN, RCP</strong><br />
-            Clinical Specialist<br />
-            Kadence Health Care<br />
-            7554 Trade St, San Diego, CA 92121<br />
-            <strong>Phone:</strong> 858‑569‑6994 (Ext 11, Personal Ext 113)<br />
-            <strong>Email:</strong> <a href="mailto:Khassen@kadence-inc.com">Khassen@kadence‑inc.com</a><br />
-            <strong>Website:</strong> <a href="https://www.kadencehealthcare.com/test/" target="_blank" rel="noopener">https://www.kadencehealthcare.com/test/</a><br />
-            <img src="Kasim_Hassen_vCard_QR.png" alt="Contact QR Code" style="max-width: 150px; margin-top: 10px;" /></p>
+            <p>
+                <strong>KASIM HASSEN, RCP</strong><br/>
+                Clinical Specialist<br/>
+                Kadence Health Care<br/>
+                7554 Trade St, San Diego, CA 92121<br/>
+                <strong>Phone:</strong> 858-569-6994 (Ext 11, Personal Ext 113)<br/>
+                <strong>Email:</strong> <a href="mailto:Khassen@kadence-inc.com">Khassen@kadence-inc.com</a><br/>
+                <strong>Website:</strong> <a href="https://www.kadencehealthcare.com/test/" target="_blank" rel="noopener">
+                    https://www.kadencehealthcare.com/test/
+                </a><br/>
+                <img src="Kasim_Hassen_vCard_QR.png" alt="Contact QR Code" style="max-width:150px; margin-top:10px;"/>
+            </p>
         </section>
     </main>
+
+    <!-- html2pdf.js (bundled with html2canvas + jsPDF) -->
+    <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
+
+    <script>
+        // Generate PDF of the <main> content
+        document.getElementById('pdfBtn').addEventListener('click', () => {
+            const source = document.getElementById('pdf-source'); // or document.body
+
+            const opt = {
+                margin:       [10, 10, 10, 10],      // mm
+                filename:     'CPAP_Visit_Summary.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true, scrollY: 0 },
+                jsPDF:        { unit: 'mm', format: 'letter', orientation: 'portrait' }
+            };
+
+            html2pdf().set(opt).from(source).save();
+        });
+
+        // Generate and download a vCard for Kasim Hassen
+        document.getElementById('vcfBtn').addEventListener('click', () => {
+          const vcard = [
+            'BEGIN:VCARD',
+            'VERSION:3.0',
+            'N:Hassen;Kasim;;;',
+            'FN:KASIM HASSEN, RCP',
+            'TITLE:Clinical Specialist',
+            'ORG:Kadence Health Care',
+            'TEL;TYPE=WORK,VOICE:+1-858-569-6994',
+            'EMAIL;TYPE=PREF,INTERNET:Khassen@kadence-inc.com',
+            'ADR;TYPE=WORK:;;7554 Trade St;San Diego;CA;92121;USA',
+            'URL:https://www.kadencehealthcare.com/test/',
+            'NOTE:Extensions: 11 (main), 113 (personal)',
+            'END:VCARD' 
+          ].join('\n');
+
+          const blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'Kasim_Hassen.vcf';
+          document.body.appendChild(a);
+          a.click();
+          setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 0);
+        });
+    </script>
 </body>
 </html>
