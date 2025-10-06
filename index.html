@@ -156,7 +156,7 @@
         <div class="controls">
             <a class="btn" href="#schedule">View Replacement Schedule</a>
             <a class="btn secondary" href="resmed-schedule.pdf" download>Download ResMed Schedule PDF</a>
-            <a class="btn secondary" href="#" id="vcf-download">Download Contact Card (VCF)</a>
+            <a class="btn secondary" href="Kasim_Hassen.vcf" download>Download Contact Card (Kasim Hassen)</a>
         </div>
         <section id="getting-started">
             <h2>Getting Started</h2>
@@ -254,35 +254,9 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
-        // vCard download handler
-        document.getElementById('vcf-download').addEventListener('click', (e) => {
-            e.preventDefault();
-            const vcard = [
-                'BEGIN:VCARD',
-                'VERSION:3.0',
-                'N:Hassen;Kasim;;;',
-                'FN:KASIM HASSEN, RCP',
-                'TITLE:Clinical Specialist',
-                'ORG:Kadence Health Care',
-                'TEL;TYPE=WORK,VOICE:+1-858-569-6994',
-                'EMAIL;TYPE=PREF,INTERNET:Khassen@kadence-inc.com',
-                'ADR;TYPE=WORK:;;7554 Trade St;San Diego;CA;92121;USA',
-                'URL:https://www.kadencehealthcare.com/test/',
-                'NOTE:Extensions: 11 (main), 113 (personal)',
-                'END:VCARD'
-            ].join('\\n');
-            const blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8' });
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = 'Kasim_Hassen.vcf';
-            document.body.appendChild(link);
-            link.click();
-            setTimeout(() => {
-                URL.revokeObjectURL(url);
-                link.remove();
-            }, 0);
-        });
+        /* The vCard button links directly to the on-disk Kasim_Hassen.vcf file.
+           The previous JavaScript-based download handler has been removed to
+           avoid issues with Safari blocking downloads initiated via blob URLs. */
     </script>
 </body>
 </html>
