@@ -1,0 +1,416 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="description" content="Patient-friendly CPAP Visit Summary with setup videos, troubleshooting tips, ResMed resources, Medicare-aligned supply replacement schedule, and clinician contact information.">
+    <title>CPAP Visit Summary</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #333;
+            font-size: clamp(16px, 2.5vw, 18px);
+        }
+        header {
+            background-color: #01579b;
+            color: #fff;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        main {
+            max-width: 900px;
+            margin: 1rem auto;
+            padding: clamp(1rem, 2.5vw, 1.5rem);
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 { color: #01579b; }
+        h1 { margin-top: 0; font-size: clamp(1.8rem, 5vw, 2.2rem); }
+        h2 { font-size: clamp(1.4rem, 4vw, 1.6rem); }
+        h3 { font-size: clamp(1.2rem, 3.5vw, 1.3rem); }
+        section { 
+            margin-bottom: 2rem; 
+            border-bottom: 1px solid #e0e0e0; 
+            padding-bottom: 1rem; 
+        }
+        ul { list-style-type: disc; margin-left: 1.5rem; }
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-top: 0.5rem; 
+            display: block; 
+            overflow-x: auto; 
+            -webkit-overflow-scrolling: touch;
+        }
+        table, th, td { border: 1px solid #ccc; }
+        th, td { padding: 0.5rem 0.75rem; text-align: left; }
+        th { background-color: #e1f5fe; }
+        .note { font-size: 0.9em; color: #555; margin-top: 0.5rem; }
+
+        /* Buttons / controls */
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 1rem auto;
+            text-align: center;
+        }
+        .btn {
+            background: #01579b;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 0.75rem 1rem;
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+            cursor: pointer;
+            transition: filter 0.2s;
+            touch-action: manipulation;
+            min-height: 44px; /* WCAG touch target size */
+        }
+        .btn:hover, .btn:focus { filter: brightness(1.05); outline: 2px solid #333; }
+        .btn.secondary { background: #455a64; }
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 1rem;
+            right: 1rem;
+            background: #01579b;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 3rem;
+            height: 3rem;
+            font-size: 1rem;
+            cursor: pointer;
+            display: none;
+            z-index: 1000;
+            transition: opacity 0.3s;
+        }
+        .back-to-top.visible { display: block; }
+
+        /* Print styles */
+        * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        .no-print { display: block; }
+        @media print {
+            .no-print { display: none !important; }
+            a[href]:after { content: ""; }
+            header, main { box-shadow: none; }
+            @page { size: Letter; margin: 12mm; }
+            h2, h3, table, tr, img, section { break-inside: avoid; page-break-inside: avoid; }
+        }
+
+        /* Responsive styles */
+        @media (max-width: 600px) {
+            body { font-size: 16px; }
+            header { padding: 1rem; }
+            main { margin: 0.5rem; padding: 1rem; }
+            .btn {
+                width: 100%;
+                padding: 0.75rem;
+                font-size: 1rem;
+            }
+            .controls { flex-direction: column; }
+        }
+        @media (max-width: 400px) {
+            h1 { font-size: 1.5rem; }
+            h2 { font-size: 1.2rem; }
+            h3 { font-size: 1rem; }
+            table { font-size: 0.85rem; }
+            th, td { padding: 0.4rem 0.6rem; }
+        }
+
+        /* Responsive PDF embed */
+        .pdf-embed { margin: 1rem 0; }
+        .pdf-embed iframe,
+        .pdf-embed object,
+        .pdf-embed embed { 
+            width: 100%; 
+            height: 60vh; 
+            border: 1px solid #ccc; 
+            border-radius: 6px; 
+            display: block;
+        }
+        @media (max-width: 600px) {
+            .pdf-embed iframe,
+            .pdf-embed object,
+            .pdf-embed embed { height: 50vh; }
+        }
+        .pdf-embed.full iframe,
+        .pdf-embed.full object,
+        .pdf-embed.full embed { height: 100vh; }
+        @media (max-width: 600px) {
+            .pdf-embed.full iframe,
+            .pdf-embed.full object,
+            .pdf-embed.full embed { height: 90vh; }
+        }
+    </style>
+</head>
+<body>
+    <h2 style="text-align:center; margin-top:1rem; color:#01579b;">CPAP Visit Summary</h2>
+
+    <header>
+        <h1>CPAP Visit Summary</h1>
+        <p style="margin:0.4rem 0 0; font-size:0.95em; opacity:0.85;">Last updated: October 5, 2025</p>
+    </header>
+
+    <div class="controls no-print">
+        <button id="pdfBtn" class="btn" aria-label="Download this page as PDF">Download PDF</button>
+        <button id="vcfBtn" class="btn secondary" aria-label="Download contact card for Kasim Hassen">Download Contact Card (Kasim Hassen)</button>
+    </div>
+
+    <main id="pdf-source">
+        <section>
+            <h2>Setting it up and getting started:</h2>
+            <ul>
+                <li>Video:
+                    <a href="https://youtu.be/4Ctb_N41KD0?si=3HLojNI57-IWmmYo" target="_blank" rel="noopener">
+                        Here's a great "user setup video" I found on Youtube
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Cleaning</h2>
+            <ul>
+                <li>Video:
+                    <a href="https://youtu.be/c6Vwca9kJLE?si=dHqrytDc2Qwm8HR1" target="_blank" rel="noopener">
+                        CPAP essentials
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Troubleshooting tips</h2>
+            <ul>
+                <li>Most Common issue - Air leak:
+                    <a href="https://youtu.be/kLvbLflxzug?si=1KsUkVZjxTCIFFsW" target="_blank" rel="noopener">
+                        Watch here
+                    </a>
+                </li>
+                <li>More Great Tips found on YouTube:
+                    <a href="https://youtu.be/-BEBNch_l84?si=zGfcpV7nu36E2nmD" target="_blank" rel="noopener">
+                        Watch here
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>ResMed resources</h2>
+            <ul>
+                <li>Patient education hub:
+                    <a href="https://www.resmed.com/en-us/products/cpap/the-complete-system/" target="_blank" rel="noopener">
+                        ResMed Resource 1
+                    </a>
+                </li>
+                <li>Masks, parts, and care:
+                    <a href="https://www.resmed.com/en-us/sleep-health/sleep-apnea/sleep-study-and-specialist-care/blog/" target="_blank" rel="noopener">
+                        ResMed Resource 2
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Insurance coverage guidelines (Standard)</h2>
+            <p><em>These are typical requirements. Always confirm with your specific plan.</em></p>
+
+            <h3>Initial 90 days</h3>
+            <ul>
+                <li>
+                    <strong>Usage criteria:</strong> Documented compliant use as required by your insurer
+                    <ul>
+                        <li>At least 21 days of use (4+ hrs) within any 30-day period during the initial 90 days</li>
+                        <li>Please refer to your “Welcome” emails or calls as your insurance coverage may differ</li>
+                    </ul>
+                </li>
+                <li><strong>Face-to-face physician visit requirement (some insurers may not require it):</strong> Follow-up typically within the first 90 days</li>
+            </ul>
+
+            <h3>Official ResMed Replacement Schedule (PDF)</h3>
+            <div class="controls no-print" style="margin-top:0.4rem;">
+                <a class="btn" href="/resmed-schedule.pdf" target="_blank" rel="noopener" aria-label="Open the ResMed replacement schedule PDF in a new tab">Open PDF</a>
+                <a class="btn secondary" href="/resmed-schedule.pdf" download aria-label="Download the ResMed replacement schedule PDF">Download PDF</a>
+            </div>
+            <div class="pdf-embed">
+                <iframe id="resmed-pdf" src="/resmed-schedule.pdf" title="ResMed CPAP supplies & replacement parts tip sheet"></iframe>
+                <p class="note">If the PDF does not display, <a href="/resmed-schedule.pdf" target="_blank" rel="noopener">open it in a new tab</a> or use the download button above.</p>
+            </div>
+            <p class="note">This embedded document is provided by ResMed and reflects schedules based on current Medicare supplier guidance. Always confirm coverage with your insurer and follow your clinician’s instructions.</p>
+            <div class="controls no-print" style="margin-top:0.5rem;">
+                <button id="pdfExpandBtn" class="btn secondary" aria-expanded="false" aria-controls="resmed-pdf">Expand PDF to full height</button>
+            </div>
+
+            <details class="no-print" style="margin-top:0.9rem;">
+                <summary><strong>Quick replacement summary (text)</strong></summary>
+                <div style="margin-top:0.6rem;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col">Component</th>
+                                <th scope="col">Suggested Interval</th>
+                                <th scope="col">Reason / Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>CPAP machine (device)</td><td>Every 5 years</td><td>Typical useful lifetime; replace earlier if malfunctioning</td></tr>
+                            <tr><td>Tubing / Hose (incl. ClimateLineAir)</td><td>Every 3 months</td><td>Avoid cracks, leaks, microbial buildup</td></tr>
+                            <tr><td>Mask cushions / Nasal pillows</td><td>Every 1 month</td><td>Maintain seal; skin oils degrade material</td></tr>
+                            <tr><td>Mask frame / interface</td><td>Every 3 months</td><td>Manufacturer & supplier guideline</td></tr>
+                            <tr><td>Headgear / straps</td><td>Every 6 months</td><td>Loss of elasticity or fit</td></tr>
+                            <tr><td>Filters (foam / paper / disposable)</td><td>Monthly</td><td>Reduce clogging and airflow restriction</td></tr>
+                            <tr><td>Water chamber (humidifier)</td><td>Every 6 months</td><td>Mineral deposits / discoloration over time</td></tr>
+                        </tbody>
+                    </table>
+                    <p class="note">These intervals reflect common manufacturer (e.g., ResMed) and Medicare supplier practices. Coverage varies by insurer and plan; replace earlier if you notice leaks, discomfort, or reduced performance.</p>
+                </div>
+            </details>
+        </section>
+
+        <section>
+            <h2>Questions and technical support</h2>
+            <p>
+                <strong>KASIM HASSEN, RCP</strong><br/>
+                Clinical Specialist<br/>
+                Kadence Health Care<br/>
+                7554 Trade St, San Diego, CA 92121<br/>
+                <strong>Phone:</strong> <a href="tel:+18585696994">858-569-6994</a> (Ext 11, Personal Ext 113)<br/>
+                <strong>Email:</strong> <a href="mailto:Khassen@kadence-inc.com">Khassen@kadence-inc.com</a><br/>
+                <strong>Website:</strong> <a href="https://www.kadencehealthcare.com/test/" target="_blank" rel="noopener">
+                    https://www.kadencehealthcare.com/test/
+                </a><br/>
+                <img src="/Kasim_Hassen_vCard_QR.png" alt="Contact QR Code for Kasim Hassen" style="max-width:150px; margin-top:0.6rem;" onerror="this.src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg=='; this.alt='QR code unavailable';" />
+            </p>
+        </section>
+    </main>
+
+    <button class="back-to-top no-print" aria-label="Back to top">↑</button>
+
+    <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
+
+    <script>
+        // PDF Download with Loading State
+        const pdfBtn = document.getElementById('pdfBtn');
+        pdfBtn.addEventListener('click', () => {
+            pdfBtn.disabled = true;
+            pdfBtn.textContent = 'Generating PDF...';
+            const source = document.getElementById('pdf-source');
+            const opt = {
+                margin: [10, 10, 10, 10],
+                filename: 'CPAP_Visit_Summary.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true, scrollY: 0 },
+                jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }
+            };
+            html2pdf().set(opt).from(source).save().then(() => {
+                pdfBtn.disabled = false;
+                pdfBtn.textContent = 'Download PDF';
+            });
+        });
+
+        // VCF Download
+        document.getElementById('vcfBtn').addEventListener('click', () => {
+            const vcard = [
+                'BEGIN:VCARD',
+                'VERSION:3.0',
+                'N:Hassen;Kasim;;;',
+                'FN:KASIM HASSEN, RCP',
+                'TITLE:Clinical Specialist',
+                'ORG:Kadence Health Care',
+                'TEL;TYPE=WORK,VOICE:+1-858-569-6994',
+                'EMAIL;TYPE=PREF,INTERNET:Khassen@kadence-inc.com',
+                'ADR;TYPE=WORK:;;7554 Trade St;San Diego;CA;92121;USA',
+                'URL:https://www.kadencehealthcare.com/test/',
+                'NOTE:Extensions: 11 (main), 113 (personal)',
+                'END:VCARD'
+            ].join('\n');
+            const blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Kasim_Hassen.vcf';
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 0);
+        });
+
+        // PDF Expand/Collapse Toggle
+        (function() {
+            const pdfContainer = document.querySelector('.pdf-embed');
+            const toggleBtn = document.getElementById('pdfExpandBtn');
+            if (pdfContainer && toggleBtn) {
+                toggleBtn.addEventListener('click', () => {
+                    const isFull = pdfContainer.classList.toggle('full');
+                    toggleBtn.setAttribute('aria-expanded', String(isFull));
+                    toggleBtn.textContent = isFull ? 'Collapse PDF height' : 'Expand PDF to full height';
+                });
+            }
+        })();
+
+        // Back to Top Button
+        (function() {
+            const backToTop = document.querySelector('.back-to-top');
+            if (backToTop) {
+                window.addEventListener('scroll', () => {
+                    backToTop.classList.toggle('visible', window.scrollY > 300);
+                });
+                backToTop.addEventListener('click', () => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            }
+        })();
+    </script>
+</body>
+</html>
