@@ -114,7 +114,7 @@
 
     <main id="pdf-source">
         <section>
-            <h2>Seting it up and getting started:</h2>
+            <h2>Setting it up and getting started:</h2>
             <ul>
                 <li>Video:
                     <a href="https://youtu.be/4Ctb_N41KD0?si=3HLojNI57-IWmmYo" target="_blank" rel="noopener">
@@ -195,34 +195,34 @@
                 <p class="note">If the PDF does not display, <a href="resmed-schedule.pdf" target="_blank" rel="noopener">open it in a new tab</a> or use the download button above.</p>
             </div>
             <p class="note">This embedded document is provided by ResMed and reflects schedules based on current Medicare supplier guidance. Always confirm coverage with your insurer and follow your clinician’s instructions.</p>
-  <div class="controls no-print" style="margin-top:8px;">
-    <button id="pdfExpandBtn" class="btn secondary" aria-expanded="false" aria-controls="resmed-pdf">Expand PDF to full height</button>
-  </div>
+            <div class="controls no-print" style="margin-top:8px;">
+                <button id="pdfExpandBtn" class="btn secondary" aria-expanded="false" aria-controls="resmed-pdf">Expand PDF to full height</button>
+            </div>
 
-  <details class="no-print" style="margin-top:14px;">
-    <summary><strong>Quick replacement summary (text)</strong></summary>
-    <div style="margin-top:10px;">
-      <table>
-        <thead>
-          <tr>
-            <th scope="col">Component</th>
-            <th scope="col">Suggested Interval</th>
-            <th scope="col">Reason / Notes</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>CPAP machine (device)</td><td>Every 5 years</td><td>Typical useful lifetime; replace earlier if malfunctioning</td></tr>
-          <tr><td>Tubing / Hose (incl. ClimateLineAir)</td><td>Every 3 months</td><td>Avoid cracks, leaks, microbial buildup</td></tr>
-          <tr><td>Mask cushions / Nasal pillows</td><td>Every 1 month</td><td>Maintain seal; skin oils degrade material</td></tr>
-          <tr><td>Mask frame / interface</td><td>Every 3 months</td><td>Manufacturer & supplier guideline</td></tr>
-          <tr><td>Headgear / straps</td><td>Every 6 months</td><td>Loss of elasticity or fit</td></tr>
-          <tr><td>Filters (foam / paper / disposable)</td><td>Monthly</td><td>Reduce clogging and airflow restriction</td></tr>
-          <tr><td>Water chamber (humidifier)</td><td>Every 6 months</td><td>Mineral deposits / discoloration over time</td></tr>
-        </tbody>
-      </table>
-      <p class="note">These intervals reflect common manufacturer (e.g., ResMed) and Medicare supplier practices. Coverage varies by insurer and plan; replace earlier if you notice leaks, discomfort, or reduced performance.</p>
-    </div>
-  </details>
+            <details class="no-print" style="margin-top:14px;">
+                <summary><strong>Quick replacement summary (text)</strong></summary>
+                <div style="margin-top:10px;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col">Component</th>
+                                <th scope="col">Suggested Interval</th>
+                                <th scope="col">Reason / Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>CPAP machine (device)</td><td>Every 5 years</td><td>Typical useful lifetime; replace earlier if malfunctioning</td></tr>
+                            <tr><td>Tubing / Hose (incl. ClimateLineAir)</td><td>Every 3 months</td><td>Avoid cracks, leaks, microbial buildup</td></tr>
+                            <tr><td>Mask cushions / Nasal pillows</td><td>Every 1 month</td><td>Maintain seal; skin oils degrade material</td></tr>
+                            <tr><td>Mask frame / interface</td><td>Every 3 months</td><td>Manufacturer & supplier guideline</td></tr>
+                            <tr><td>Headgear / straps</td><td>Every 6 months</td><td>Loss of elasticity or fit</td></tr>
+                            <tr><td>Filters (foam / paper / disposable)</td><td>Monthly</td><td>Reduce clogging and airflow restriction</td></tr>
+                            <tr><td>Water chamber (humidifier)</td><td>Every 6 months</td><td>Mineral deposits / discoloration over time</td></tr>
+                        </tbody>
+                    </table>
+                    <p class="note">These intervals reflect common manufacturer (e.g., ResMed) and Medicare supplier practices. Coverage varies by insurer and plan; replace earlier if you notice leaks, discomfort, or reduced performance.</p>
+                </div>
+            </details>
         </section>
 
         <section>
@@ -270,8 +270,8 @@
             'ADR;TYPE=WORK:;;7554 Trade St;San Diego;CA;92121;USA',
             'URL:https://www.kadencehealthcare.com/test/',
             'NOTE:Extensions: 11 (main), 113 (personal)',
-            'END:VCARD' 
-          ].join('\\n');
+            'END:VCARD'
+          ].join('\n');
 
           const blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8' });
           const url = URL.createObjectURL(blob);
@@ -283,17 +283,17 @@
           setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 0);
         });
 
-  (function(){
-    const pdfContainer = document.querySelector('.pdf-embed');
-    const toggleBtn = document.getElementById('pdfExpandBtn');
-    if (pdfContainer && toggleBtn) {
-      toggleBtn.addEventListener('click', () => {
-        const isFull = pdfContainer.classList.toggle('full');
-        toggleBtn.setAttribute('aria-expanded', String(isFull));
-        toggleBtn.textContent = isFull ? 'Collapse PDF height' : 'Expand PDF to full height';
-      });
-    }
-  })();
+        (function(){
+          const pdfContainer = document.querySelector('.pdf-embed');
+          const toggleBtn = document.getElementById('pdfExpandBtn');
+          if (pdfContainer && toggleBtn) {
+            toggleBtn.addEventListener('click', () => {
+              const isFull = pdfContainer.classList.toggle('full');
+              toggleBtn.setAttribute('aria-expanded', String(isFull));
+              toggleBtn.textContent = isFull ? 'Collapse PDF height' : 'Expand PDF to full height';
+            });
+          }
+        })();
     </script>
 </body>
 </html>
