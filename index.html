@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="Patient-friendly CPAP Visit Summary with setup videos, troubleshooting tips, ResMed resources, Medicare-aligned supply replacement schedule, and clinician contact information.">
+    <title>CPAP Visit Summary</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        header {
+            background-color: #01579b;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        main {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 { color: #01579b; }
+        h1 { margin-top: 0; }
+        section { margin-bottom: 30px; }
+        ul { list-style-type: disc; margin-left: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        table, th, td { border: 1px solid #ccc; }
+        th, td { padding: 8px 12px; text-align: left; }
+        th { background-color: #e1f5fe; }
+        .note { font-size: 0.9em; color: #555; }
+
+        /* Buttons / controls */
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin: 14px auto;
+            text-align: center;
+        }
+        .btn {
+            background: #01579b;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 14px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .btn:hover { filter: brightness(1.05); }
+        .btn.secondary { background: #455a64; }
+
+        * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        .no-print { display: block; }
+        @media print {
+            .no-print { display: none !important; }
+            a[href]:after { content: ""; }
+            header, main { box-shadow: none; }
+            @page { size: Letter; margin: 12mm; }
+            h2, h3, table, tr, img, section { break-inside: avoid; page-break-inside: avoid; }
+        }
+
+        @media (max-width: 600px) {
+            .btn {
+                width: 90%;
+                font-size: 16px;
+                padding: 12px 0;
+            }
+        }
+
+        /* Responsive PDF embed */
+        .pdf-embed { margin: 16px 0; }
+        .pdf-embed iframe,
+        .pdf-embed object,
+        .pdf-embed embed { width: 100%; height: 85vh; border: 1px solid #ccc; border-radius: 6px; }
+        @media (max-width: 600px) {
+          .pdf-embed iframe,
+          .pdf-embed object,
+          .pdf-embed embed { height: 70vh; }
+        }
+
+        /* Full-height toggle for embedded PDF */
+        .pdf-embed.full iframe,
+        .pdf-embed.full object,
+        .pdf-embed.full embed { height: 100vh; }
+        @media (max-width: 600px) {
+          .pdf-embed.full iframe,
+          .pdf-embed.full object,
+          .pdf-embed.full embed { height: 100vh; }
+        }
+    </style>
+</head>
+<body>
+    <h2 style="text-align:center; margin-top:20px; color:#01579b;">CPAP Visit Summary</h2>
+
+    <header>
+        <h1>CPAP Visit Summary</h1>
+        <p style="margin:6px 0 0; font-size:0.95em; opacity:0.85;">Last updated: October 5, 2025</p>
+    </header>
+
+    <div class="controls no-print">
+        <button id="pdfBtn" class="btn" aria-label="Download this page as PDF">Download PDF</button>
+        <button id="vcfBtn" class="btn secondary" aria-label="Download contact card for Kasim Hassen">Download Contact Card (Kasim Hassen)</button>
+    </div>
+
+    <main id="pdf-source">
+        <section>
+            <h2>Seting it up and getting started:</h2>
+            <ul>
+                <li>Video:
+                    <a href="https://youtu.be/4Ctb_N41KD0?si=3HLojNI57-IWmmYo" target="_blank" rel="noopener">
+                        Here's a great "user setup video" I found on Youtube
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Cleaning</h2>
+            <ul>
+                <li>Video:
+                    <a href="https://youtu.be/c6Vwca9kJLE?si=dHqrytDc2Qwm8HR1" target="_blank" rel="noopener">
+                        CPAP essentials
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Troubleshooting tips</h2>
+            <ul>
+                <li>Most Common issue -  Air leak:
+                    <a href="https://youtu.be/kLvbLflxzug?si=1KsUkVZjxTCIFFsW" target="_blank" rel="noopener">
+                        Watch here
+                    </a>
+                </li>
+                <li>More Great Tips found on YouTube:
+                    <a href="https://youtu.be/-BEBNch_l84?si=zGfcpV7nu36E2nmD" target="_blank" rel="noopener">
+                        Watch here
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+        <hr />
+        <section>
+            <h2>ResMed resources</h2>
+            <ul>
+                <li>Patient education hub:
+                    <a href="https://www.resmed.com/en-us/products/cpap/the-complete-system/" target="_blank" rel="noopener">
+                        ResMed Resource 1
+                    </a>
+                </li>
+                <li>Masks, parts, and care:
+                    <a href="https://www.resmed.com/en-us/sleep-health/sleep-apnea/sleep-study-and-specialist-care/blog/" target="_blank" rel="noopener">
+                        ResMed Resource 2
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+        <hr />
+        <section>
+            <h2>Insurance coverage guidelines (Standard)</h2>
+            <p><em>These are typical requirements. Always confirm with your specific plan.</em></p>
+
+            <h3>Initial 90 days</h3>
+            <ul>
+                <li>
+                    <strong>Usage criteria:</strong> Documented compliant use as required by your insurer
+                    <ul>
+                        <li>At least 21 days of use (4+ hrs) within any 30-day period during the initial 90 days</li>
+                        <li>Please refer to your “Welcome” emails or calls as your insurance coverage may differ</li>
+                    </ul>
+                </li>
+                <li><strong>Face-to-face physician visit requirement (some insurers may not require it):</strong> Follow-up typically within the first 90 days</li>
+            </ul>
+
+            <h3>Official ResMed Replacement Schedule (PDF)</h3>
+            <div class="controls no-print" style="margin-top:6px;">
+                <a class="btn" href="resmed_replacement_tip_sheet.pdf" target="_blank" rel="noopener" aria-label="Open the ResMed replacement schedule PDF in a new tab">Open PDF</a>
+                <a class="btn secondary" href="resmed_replacement_tip_sheet.pdf" download aria-label="Download the ResMed replacement schedule PDF">Download PDF</a>
+            </div>
+            <div class="pdf-embed">
+                <iframe id="resmed-pdf" src="resmed_replacement_tip_sheet.pdf" title="ResMed CPAP supplies & replacement parts tip sheet"></iframe>
+                <p class="note">If the PDF does not display, <a href="resmed_replacement_tip_sheet.pdf" target="_blank" rel="noopener">open it in a new tab</a> or use the download button above.</p>
+            </div>
+            <p class="note">This embedded document is provided by ResMed and reflects schedules based on current Medicare supplier guidance. Always confirm coverage with your insurer and follow your clinician’s instructions.</p>
+  <div class="controls no-print" style="margin-top:8px;">
+    <button id="pdfExpandBtn" class="btn secondary" aria-expanded="false" aria-controls="resmed-pdf">Expand PDF to full height</button>
+  </div>
+
+  <details class="no-print" style="margin-top:14px;">
+    <summary><strong>Quick replacement summary (text)</strong></summary>
+    <div style="margin-top:10px;">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Component</th>
+            <th scope="col">Suggested Interval</th>
+            <th scope="col">Reason / Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>CPAP machine (device)</td><td>Every 5 years</td><td>Typical useful lifetime; replace earlier if malfunctioning</td></tr>
+          <tr><td>Tubing / Hose (incl. ClimateLineAir)</td><td>Every 3 months</td><td>Avoid cracks, leaks, microbial buildup</td></tr>
+          <tr><td>Mask cushions / Nasal pillows</td><td>Every 1 month</td><td>Maintain seal; skin oils degrade material</td></tr>
+          <tr><td>Mask frame / interface</td><td>Every 3 months</td><td>Manufacturer & supplier guideline</td></tr>
+          <tr><td>Headgear / straps</td><td>Every 6 months</td><td>Loss of elasticity or fit</td></tr>
+          <tr><td>Filters (foam / paper / disposable)</td><td>Monthly</td><td>Reduce clogging and airflow restriction</td></tr>
+          <tr><td>Water chamber (humidifier)</td><td>Every 6 months</td><td>Mineral deposits / discoloration over time</td></tr>
+        </tbody>
+      </table>
+      <p class="note">These intervals reflect common manufacturer (e.g., ResMed) and Medicare supplier practices. Coverage varies by insurer and plan; replace earlier if you notice leaks, discomfort, or reduced performance.</p>
+    </div>
+  </details>
+        </section>
+
+        <section>
+            <h2>Questions and technical support</h2>
+            <p>
+                <strong>KASIM HASSEN, RCP</strong><br/>
+                Clinical Specialist<br/>
+                Kadence Health Care<br/>
+                7554 Trade St, San Diego, CA 92121<br/>
+                <strong>Phone:</strong> <a href="tel:+18585696994">858-569-6994</a> (Ext 11, Personal Ext 113)<br/>
+                <strong>Email:</strong> <a href="mailto:Khassen@kadence-inc.com">Khassen@kadence-inc.com</a><br/>
+                <strong>Website:</strong> <a href="https://www.kadencehealthcare.com/test/" target="_blank" rel="noopener">
+                    https://www.kadencehealthcare.com/test/
+                </a><br/>
+                <img src="Kasim_Hassen_vCard_QR.png" alt="Contact QR Code" style="max-width:150px; margin-top:10px;"/>
+            </p>
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
+
+    <script>
+        document.getElementById('pdfBtn').addEventListener('click', () => {
+            const source = document.getElementById('pdf-source');
+            const opt = {
+                margin: [10, 10, 10, 10],
+                filename: 'CPAP_Visit_Summary.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true, scrollY: 0 },
+                jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }
+            };
+            html2pdf().set(opt).from(source).save();
+        });
+
+        document.getElementById('vcfBtn').addEventListener('click', () => {
+          const vcard = [
+            'BEGIN:VCARD',
+            'VERSION:3.0',
+            'N:Hassen;Kasim;;;',
+            'FN:KASIM HASSEN, RCP',
+            'TITLE:Clinical Specialist',
+            'ORG:Kadence Health Care',
+            'TEL;TYPE=WORK,VOICE:+1-858-569-6994',
+            'EMAIL;TYPE=PREF,INTERNET:Khassen@kadence-inc.com',
+            'ADR;TYPE=WORK:;;7554 Trade St;San Diego;CA;92121;USA',
+            'URL:https://www.kadencehealthcare.com/test/',
+            'NOTE:Extensions: 11 (main), 113 (personal)',
+            'END:VCARD' 
+          ].join('\\n');
+
+          const blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'Kasim_Hassen.vcf';
+          document.body.appendChild(a);
+          a.click();
+          setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 0);
+        });
+
+  (function(){
+    const pdfContainer = document.querySelector('.pdf-embed');
+    const toggleBtn = document.getElementById('pdfExpandBtn');
+    if (pdfContainer && toggleBtn) {
+      toggleBtn.addEventListener('click', () => {
+        const isFull = pdfContainer.classList.toggle('full');
+        toggleBtn.setAttribute('aria-expanded', String(isFull));
+        toggleBtn.textContent = isFull ? 'Collapse PDF height' : 'Expand PDF to full height';
+      });
+    }
+  })();
+    </script>
+</body>
+</html>
